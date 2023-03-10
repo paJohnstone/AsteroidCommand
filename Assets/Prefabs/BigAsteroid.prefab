@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2424168932238444851}
   m_Layer: 8
   m_Name: BigAsteroid
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -1669874734, guid: 9dde8b314f31f884dae33204513ac531, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,7 +102,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.74
 --- !u!50 &3939905903590332170
 Rigidbody2D:
   serializedVersion: 4
@@ -115,7 +115,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0.02
@@ -141,3 +141,4 @@ MonoBehaviour:
   - {fileID: 1349548721, guid: 9dde8b314f31f884dae33204513ac531, type: 3}
   - {fileID: -1547166645, guid: 9dde8b314f31f884dae33204513ac531, type: 3}
   - {fileID: 803482577, guid: 9dde8b314f31f884dae33204513ac531, type: 3}
+  smallAsteroidPrefab: {fileID: 3939905903590332405, guid: 724efcb2171d7be4c8d418d58224d246, type: 3}

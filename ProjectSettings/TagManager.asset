@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Bullet
   - Asteroid
+  - Ground
+  - Building
+  - SmallAsteroid
   layers:
   - Default
   - TransparentFX

@@ -15,6 +15,13 @@ public class Ship : MonoBehaviour
     [SerializeField] float respawnDelay = 3f;
     [SerializeField] float respawnInvulnerability = 3f;
 
+    [SerializeField] Transform spawnPoint;
+
+    [SerializeField] GameObject afterburnerObject;
+    [SerializeField] ParticleSystem smokeTrailPS;
+
+    [SerializeField] GameObject explosionPrefab;
+
     Rigidbody2D shipRB;
 
     public Bullet bulletPrefab;
@@ -26,7 +33,7 @@ public class Ship : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine("TurnOnCollisions");
+        //StartCoroutine("TurnOnCollisions");
     }
     // Start is called before the first frame update
     void Start()
@@ -56,6 +63,19 @@ public class Ship : MonoBehaviour
         {
             Shoot();
         }
+
+        if (thrusting)
+        {
+            afterburnerObject.SetActive(true);
+            var emission = smokeTrailPS.emission;
+            emission.enabled = true;
+        }
+        else
+        {
+            afterburnerObject.SetActive(false);
+            var emission = smokeTrailPS.emission;
+            emission.enabled = false;
+        }
     }
     private void FixedUpdate()
     {
@@ -75,9 +95,20 @@ public class Ship : MonoBehaviour
         bullet.LaunchProjectile(transform.up);
     }
 
-    IEnumerator TurnOnCollisions()
+    //IEnumerator TurnOnCollisions()
+    //{
+    //    yield return new WaitForSeconds(respawnInvulnerability);
+    //    gameObject.layer = LayerMask.NameToLayer("Player");
+    //}
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        yield return new WaitForSeconds(respawnInvulnerability);
-        gameObject.layer = LayerMask.NameToLayer("Player");
+        if (collision.gameObject.CompareTag("Asteroid") || collision.gameObject.CompareTag("SmallAsteroid"))
+        {
+            Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
+            gameObject.transform.position = spawnPoint.position;
+            gameObject.transform.rotation = spawnPoint.rotation;
+            shipRB.velocity = Vector2.zero;
+        }
     }
 }
