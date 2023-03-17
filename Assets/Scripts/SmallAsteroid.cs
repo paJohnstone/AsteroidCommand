@@ -8,6 +8,7 @@ using UnityEngine;
 public class SmallAsteroid : MonoBehaviour
 {
     [SerializeField] Sprite[] sprites;
+    [SerializeField] GameObject smallAsteroidExplosion;
     SpriteRenderer spriteRenderer;
     CircleCollider2D circleCollider;
     // Start is called before the first frame update
@@ -33,6 +34,11 @@ public class SmallAsteroid : MonoBehaviour
 
         spriteRenderer.enabled = false;
         circleCollider.enabled = false;
+        Instantiate(smallAsteroidExplosion, transform.position, Quaternion.identity);
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            FindObjectOfType<GameManager>().currentScore += 150;
+        }
         Destroy(gameObject, 3f);
 
     }

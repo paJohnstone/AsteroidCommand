@@ -150,3 +150,4 @@ MonoBehaviour:
   - {fileID: -1702547965, guid: 5f94f1740d7a0de43a3a07e29fd631af, type: 3}
   - {fileID: 470741798, guid: 5f94f1740d7a0de43a3a07e29fd631af, type: 3}
   hitPoints: 3
+  explosion: {fileID: 1219063248596148147, guid: 4301540ba6052724c93b344c9893ede0, type: 3}

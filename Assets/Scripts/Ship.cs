@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Ship : MonoBehaviour
 {
+    [SerializeField] GameManager gameManager;
     [SerializeField] float maxSpeed;
     [SerializeField] float thrustAmount = 1f;
     public bool thrusting {get; private set;}
@@ -26,6 +27,7 @@ public class Ship : MonoBehaviour
 
     public Bullet bulletPrefab;
 
+
     private void Awake()
     {
         shipRB = GetComponent<Rigidbody2D>();
@@ -35,47 +37,48 @@ public class Ship : MonoBehaviour
     {
         //StartCoroutine("TurnOnCollisions");
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
     void Update()
     {
-        thrusting = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
+        if (gameManager.canPlay)
+        {
+            thrusting = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            turnDirection = 1f;
-        }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            turnDirection = -1f;
-        }
-        else
-        {
-            turnDirection = 0f;
-        }
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                turnDirection = 1f;
+            }
+            else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                turnDirection = -1f;
+            }
+            else
+            {
+                turnDirection = 0f;
+            }
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-        {
-            Shoot();
-        }
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            {
+                Shoot();
+            }
 
-        if (thrusting)
-        {
-            afterburnerObject.SetActive(true);
-            var emission = smokeTrailPS.emission;
-            emission.enabled = true;
+            if (thrusting)
+            {
+                afterburnerObject.SetActive(true);
+                var emission = smokeTrailPS.emission;
+                emission.enabled = true;
+            }
+            else
+            {
+                afterburnerObject.SetActive(false);
+                var emission = smokeTrailPS.emission;
+                emission.enabled = false;
+            }
         }
-        else
-        {
-            afterburnerObject.SetActive(false);
-            var emission = smokeTrailPS.emission;
-            emission.enabled = false;
-        }
+        
+
     }
     private void FixedUpdate()
     {
@@ -105,10 +108,11 @@ public class Ship : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Asteroid") || collision.gameObject.CompareTag("SmallAsteroid"))
         {
+            shipRB.velocity = Vector2.zero;
             Instantiate(explosionPrefab, this.transform.position, Quaternion.identity);
             gameObject.transform.position = spawnPoint.position;
             gameObject.transform.rotation = spawnPoint.rotation;
-            shipRB.velocity = Vector2.zero;
+            gameManager.currentLives -= 1;
         }
     }
 }

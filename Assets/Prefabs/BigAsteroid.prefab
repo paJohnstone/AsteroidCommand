@@ -142,3 +142,4 @@ MonoBehaviour:
   - {fileID: -1547166645, guid: 9dde8b314f31f884dae33204513ac531, type: 3}
   - {fileID: 803482577, guid: 9dde8b314f31f884dae33204513ac531, type: 3}
   smallAsteroidPrefab: {fileID: 3939905903590332405, guid: 724efcb2171d7be4c8d418d58224d246, type: 3}
+  bigAsteroidExplosion: {fileID: 8484473588537340427, guid: c136decb36510c84e9daff3488d896d1, type: 3}

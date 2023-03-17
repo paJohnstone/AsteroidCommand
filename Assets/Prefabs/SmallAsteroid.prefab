@@ -141,3 +141,4 @@ MonoBehaviour:
   - {fileID: 1006070565, guid: ce4aa0b36c740de4cb6147dbfa836d20, type: 3}
   - {fileID: -266225542, guid: ce4aa0b36c740de4cb6147dbfa836d20, type: 3}
   - {fileID: -1988337277, guid: ce4aa0b36c740de4cb6147dbfa836d20, type: 3}
+  smallAsteroidExplosion: {fileID: 3120987335046008159, guid: b67bcada15c83ac4aaf6f00f1041c5bb, type: 3}

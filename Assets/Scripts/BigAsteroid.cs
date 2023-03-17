@@ -9,6 +9,7 @@ public class BigAsteroid : MonoBehaviour
 {
     [SerializeField] Sprite[] sprites;
     [SerializeField] GameObject smallAsteroidPrefab;
+    [SerializeField] GameObject bigAsteroidExplosion;
     SpriteRenderer spriteRenderer;
     CircleCollider2D circleCollider;
     bool isDead;
@@ -36,6 +37,16 @@ public class BigAsteroid : MonoBehaviour
             spriteRenderer.enabled = false;
             circleCollider.enabled = false;
             SpawnSmallies();
+            Instantiate(bigAsteroidExplosion, transform.position, Quaternion.identity);
+            FindObjectOfType<GameManager>().currentScore += 50;
+            Destroy(gameObject, 3f);
+        }
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            spriteRenderer.enabled = false;
+            circleCollider.enabled = false;
+            SpawnSmallies();
+            Instantiate(bigAsteroidExplosion, transform.position, Quaternion.identity);
             Destroy(gameObject, 3f);
         }
         if (collision.gameObject.CompareTag("Ground"))
@@ -43,6 +54,7 @@ public class BigAsteroid : MonoBehaviour
             spriteRenderer.enabled = false;
             circleCollider.enabled = false;
             SpawnSmallies();
+            Instantiate(bigAsteroidExplosion, transform.position, Quaternion.identity);
             Destroy(gameObject, 3f);
         }
         if (collision.gameObject.CompareTag("Building"))

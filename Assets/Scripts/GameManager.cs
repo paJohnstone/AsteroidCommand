@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,20 +9,32 @@ public class GameManager : MonoBehaviour
     [SerializeField] BigAsteroid bigAsteroid;
     [SerializeField] float totalWaves;
     [SerializeField] float currentWave;
-    [SerializeField] float betweenWaveTimer = 10f;
+    [SerializeField] float setBetweenWaveTimer = 10f;
     [SerializeField] float asteroidsSentThisWave;
     [SerializeField] float asteroidsTotalThisWave;
-    [SerializeField] float asteroidSpawnRate = 10f;
+    [SerializeField] float setAsteroidSpawnRate = 10f;
+    float asteroidSpawnRate;
     [SerializeField] float asteroidsRemainingInWave;
     [SerializeField] float betweenWaveCountdown;
     [SerializeField] float asteroidSpawnCountdown;
     [SerializeField] bool startWave;
+    [SerializeField] GameObject mainMenuCanvas;
+    [SerializeField] GameObject inGameUICanvas;
+    [SerializeField] TMP_Text highScoreText;
+    [SerializeField] TMP_Text scoreText;
+    [SerializeField] TMP_Text livesText;
+
+
     SpaceBuilding[] spaceBuildings;
     Camera mainCamera;
 
     float asteroidMinPossibleX;
     float asteroidMaxPossibleX;
     float asteroidStartPositionY;
+
+    public bool canPlay;
+    public int currentScore = 00000;
+    public int currentLives = 3;
 
     private void Awake()
     {
@@ -35,38 +48,54 @@ public class GameManager : MonoBehaviour
         asteroidMaxPossibleX = mainCamera.ViewportToWorldPoint(new Vector2(1, 1)).x;
         asteroidStartPositionY = mainCamera.ViewportToWorldPoint(new Vector2(1, 1)).y + 1;
 
-        betweenWaveCountdown = betweenWaveTimer;
+        betweenWaveCountdown = setBetweenWaveTimer;
         asteroidsSentThisWave = currentWave;
+
+        highScoreText.SetText("" + Constants.highScore);
+        scoreText.SetText("00000");
+        asteroidSpawnRate = setAsteroidSpawnRate;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (canPlay)
         {
-            SpawnBigAsteroidOnQueue();
-        }
-        if (!startWave)
-        {
-            betweenWaveCountdown -= Time.deltaTime;
-            if (betweenWaveCountdown <= 0)
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                startWave = true;
-                StartCoroutine("SpawnBigAsteroid");
-                betweenWaveCountdown = betweenWaveTimer;
-                currentWave++;
+                SpawnBigAsteroidOnQueue();
             }
-        }
-        if (asteroidsSentThisWave > currentWave)
-        {
-            StopCoroutine("SpawnBigAsteroid");
-            asteroidsSentThisWave = 0;
-            if (currentWave > 0)
+            if (!startWave)
             {
-                asteroidSpawnRate = asteroidSpawnRate - 0.25f;
+                betweenWaveCountdown -= Time.deltaTime;
+                if (betweenWaveCountdown <= 0)
+                {
+                    startWave = true;
+                    StartCoroutine("SpawnBigAsteroid");
+                    betweenWaveCountdown = setBetweenWaveTimer;
+                    currentWave++;
+                }
             }
-            startWave = false;
+            if (asteroidsSentThisWave > currentWave)
+            {
+                StopCoroutine("SpawnBigAsteroid");
+                asteroidsSentThisWave = 0;
+                if (currentWave > 0)
+                {
+                    asteroidSpawnRate = asteroidSpawnRate - 0.25f;
+                }
+                startWave = false;
+            }
+            scoreText.SetText("" + currentScore);
+            livesText.SetText("" + currentLives);
         }
+
+        if (currentLives <= 0)
+        {
+            GameOver();
+        }
+
+
     }
 
     void Respawn()
@@ -93,5 +122,27 @@ public class GameManager : MonoBehaviour
 
             yield return new WaitForSeconds(asteroidSpawnRate);
         }
+    }
+
+    public void StartGame()
+    {
+        canPlay = true;
+        mainMenuCanvas.SetActive(false);
+        inGameUICanvas.SetActive(true);
+    }
+    void GameOver()
+    {
+        canPlay = false;
+        mainMenuCanvas.SetActive(true);
+        inGameUICanvas.SetActive(false);
+        if (Constants.highScore < currentScore)
+        {
+            Constants.highScore = currentScore;
+        }        
+        currentLives = 3;
+        currentScore = 0;
+        asteroidSpawnRate = setAsteroidSpawnRate;
+        asteroidsSentThisWave = 0;
+        currentWave = 0;
     }
 }

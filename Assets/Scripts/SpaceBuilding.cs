@@ -7,6 +7,7 @@ public class SpaceBuilding : MonoBehaviour
     [SerializeField] Collider2D[] colliderComponents;
     [SerializeField] Sprite[] sprites;
     [SerializeField] float hitPoints = 3;
+    [SerializeField] GameObject explosion;
     SpriteRenderer sr;
     
     // Start is called before the first frame update
@@ -37,6 +38,10 @@ public class SpaceBuilding : MonoBehaviour
                 break;
             case 0:
                 sr.sprite = sprites[0];
+                foreach (Collider2D collider in colliderComponents)
+                {
+                    collider.enabled = false;
+                }
                 break;
             default:
                 break;
@@ -52,6 +57,7 @@ public class SpaceBuilding : MonoBehaviour
                 collider.enabled = false;
             }
             hitPoints = 0;
+            Instantiate(explosion, transform.position, Quaternion.identity);
         }
         if (collision.gameObject.CompareTag("SmallAsteroid"))
         {
