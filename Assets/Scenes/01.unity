@@ -1663,10 +1663,10 @@ MonoBehaviour:
   bigAsteroid: {fileID: 2424168932238444851, guid: b3c446df68e4bfe47ac33789e87e6bc3, type: 3}
   totalWaves: 0
   currentWave: 0
-  betweenWaveTimer: 10
+  setBetweenWaveTimer: 10
   asteroidsSentThisWave: 0
   asteroidsTotalThisWave: 0
-  asteroidSpawnRate: 5
+  setAsteroidSpawnRate: 10
   asteroidsRemainingInWave: 0
   betweenWaveCountdown: 0
   asteroidSpawnCountdown: 0
@@ -7524,7 +7524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
