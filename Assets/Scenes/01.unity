@@ -1666,7 +1666,7 @@ MonoBehaviour:
   setBetweenWaveTimer: 10
   asteroidsSentThisWave: 0
   asteroidsTotalThisWave: 0
-  setAsteroidSpawnRate: 10
+  setAsteroidSpawnRate: 5
   asteroidsRemainingInWave: 0
   betweenWaveCountdown: 0
   asteroidSpawnCountdown: 0

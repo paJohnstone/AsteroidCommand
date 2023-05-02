@@ -4,9 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class SpaceBuilding : MonoBehaviour
 {
-    [SerializeField] Collider2D[] colliderComponents;
+    public Collider2D[] colliderComponents;
     [SerializeField] Sprite[] sprites;
-    [SerializeField] float hitPoints = 3;
+    public int hitPoints = 3;
     [SerializeField] GameObject explosion;
     SpriteRenderer sr;
     

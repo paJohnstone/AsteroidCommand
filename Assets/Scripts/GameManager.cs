@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     float asteroidStartPositionY;
 
     public bool canPlay;
-    public int currentScore = 00000;
+    public int currentScore = 0;
     public int currentLives = 3;
 
     private void Awake()
@@ -54,6 +54,12 @@ public class GameManager : MonoBehaviour
         highScoreText.SetText("" + Constants.highScore);
         scoreText.SetText("00000");
         asteroidSpawnRate = setAsteroidSpawnRate;
+
+        foreach (SpaceBuilding spaceBuilding in spaceBuildings)
+        {
+            Constants.spaceBuildingHealth += spaceBuilding.hitPoints;
+        }
+
     }
 
     // Update is called once per frame
@@ -88,9 +94,15 @@ public class GameManager : MonoBehaviour
             }
             scoreText.SetText("" + currentScore);
             livesText.SetText("" + currentLives);
+            int currentBuildingHealth = 0;
+            foreach (SpaceBuilding spaceBuilding in spaceBuildings)
+            {
+                currentBuildingHealth += spaceBuilding.hitPoints;
+            }
+            Constants.spaceBuildingHealth = currentBuildingHealth;
         }
 
-        if (currentLives <= 0)
+        if (currentLives <= 0 || Constants.spaceBuildingHealth <= 0)
         {
             GameOver();
         }
@@ -144,5 +156,23 @@ public class GameManager : MonoBehaviour
         asteroidSpawnRate = setAsteroidSpawnRate;
         asteroidsSentThisWave = 0;
         currentWave = 0;
+        BigAsteroid[] bigAsteroidsToClear = FindObjectsOfType<BigAsteroid>();
+        foreach (BigAsteroid bigAsteroid in bigAsteroidsToClear)
+        {
+            Destroy(bigAsteroid.gameObject);
+        }
+        SmallAsteroid[] smallAsteroidsToClear = FindObjectsOfType<SmallAsteroid>();
+        foreach (SmallAsteroid smallAsteroid in smallAsteroidsToClear)
+        {
+            Destroy(smallAsteroid.gameObject);
+        }
+        foreach (SpaceBuilding spaceBuilding in spaceBuildings)
+        {
+            spaceBuilding.hitPoints = 3;
+            foreach (Collider2D collider in spaceBuilding.colliderComponents)
+            {
+                collider.enabled = true;
+            }
+        }
     }
 }

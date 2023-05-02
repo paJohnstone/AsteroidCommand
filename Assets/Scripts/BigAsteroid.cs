@@ -10,6 +10,7 @@ public class BigAsteroid : MonoBehaviour
     [SerializeField] Sprite[] sprites;
     [SerializeField] GameObject smallAsteroidPrefab;
     [SerializeField] GameObject bigAsteroidExplosion;
+    [SerializeField] int points = 50;
     SpriteRenderer spriteRenderer;
     CircleCollider2D circleCollider;
     bool isDead;
@@ -38,7 +39,7 @@ public class BigAsteroid : MonoBehaviour
             circleCollider.enabled = false;
             SpawnSmallies();
             Instantiate(bigAsteroidExplosion, transform.position, Quaternion.identity);
-            FindObjectOfType<GameManager>().currentScore += 50;
+            FindObjectOfType<GameManager>().currentScore += points;
             Destroy(gameObject, 3f);
         }
         if (collision.gameObject.CompareTag("Player"))

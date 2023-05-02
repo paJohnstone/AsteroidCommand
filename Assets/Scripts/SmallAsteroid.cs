@@ -26,7 +26,14 @@ public class SmallAsteroid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (transform.position.x < -15 || transform.position.x > 12)
+        {
+            Destroy(gameObject);
+        }
+        if (transform.position.y < -6)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
